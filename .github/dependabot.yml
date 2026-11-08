@@ -1,0 +1,37 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        patterns: ["*"]
+    labels: ["dependencies", "ci"]
+
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
+    # The PyIceberg pin moves by hand: each minor needs a compatibility
+    # review (see CONTRIBUTING.md).
+    ignore:
+      - dependency-name: "pyiceberg"
+    groups:
+      dev-tooling:
+        patterns: ["ruff", "mypy", "pytest"]
+      docs-tooling:
+        patterns:
+          - "sphinx*"
+          - "sphinx-click"
+          - "sphinxext-opengraph"
+          - "sphinx-llms-txt"
+          - "sphinx-copybutton"
+          - "furo"
+          - "myst-parser"
+    labels: ["dependencies"]
+    open-pull-requests-limit: 5

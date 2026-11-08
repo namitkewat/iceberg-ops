@@ -1,0 +1,51 @@
+name: Catalog compatibility report
+description: Tell us how iceberg-ops behaved against a specific catalog or engine.
+title: "[compat] "
+labels: ["compatibility"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Reports are welcome whether things worked or not. Please do not
+        paste credentials, tokens or catalog URIs that contain secrets.
+  - type: input
+    id: catalog
+    attributes:
+      label: Catalog and version
+      placeholder: "Apache Polaris 1.x / Lakekeeper 0.x / AWS Glue / S3 Tables / Nessie"
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: iceberg-ops, PyIceberg and PyArrow versions
+      placeholder: "iceberg-ops 0.1.0, pyiceberg 0.12.0, pyarrow 26.0.1"
+    validations:
+      required: true
+  - type: dropdown
+    id: connection
+    attributes:
+      label: How did you connect to the catalog?
+      options:
+        - CLI options or iceberg-ops.yaml
+        - Python API (a PyIceberg catalog passed to iceberg-ops)
+        - Both
+    validations:
+      required: true
+  - type: checkboxes
+    id: worked
+    attributes:
+      label: What did you run?
+      options:
+        - label: iceberg-ops migrate / rollback / history
+        - label: iceberg-ops revision --autogenerate
+        - label: iceberg-ops migrate-data
+        - label: iceberg-ops run-policies (experimental)
+        - label: maintenance helpers (Python API)
+  - type: textarea
+    id: result
+    attributes:
+      label: Result
+      description: What worked, what failed, anything surprising.
+    validations:
+      required: true

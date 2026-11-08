@@ -1,0 +1,79 @@
+name: Bug report
+description: Something in iceberg-ops behaves incorrectly.
+title: "[bug] "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this. Please do not paste
+        credentials, tokens or catalog URIs that contain secrets.
+        Security vulnerabilities: report them privately (see SECURITY.md).
+  - type: input
+    id: version
+    attributes:
+      label: iceberg-ops version
+      description: Output of `iceberg-ops --version`
+      placeholder: "iceberg-ops 0.1.0"
+    validations:
+      required: true
+  - type: input
+    id: pyiceberg
+    attributes:
+      label: PyIceberg and PyArrow versions
+      description: Output of `pip show pyiceberg pyarrow`, or just the two versions
+      placeholder: "pyiceberg 0.12.0, pyarrow 26.0.1"
+    validations:
+      required: true
+  - type: dropdown
+    id: catalog
+    attributes:
+      label: Catalog backend
+      options:
+        - sqlite
+        - memory
+        - rest (Polaris / Lakekeeper / Nessie / other)
+        - glue
+        - s3tables
+        - hive
+        - other
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - schema migrations (migrate / rollback / stamp / history)
+        - autogenerate
+        - storage maintenance
+        - cross-table data migration
+        - Polaris policy executor (experimental)
+        - CLI
+        - docs
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: Smallest migration file / script / CLI invocation that shows the problem.
+      render: python
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs actual behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Traceback or logs
+      render: text
+  - type: input
+    id: os
+    attributes:
+      label: OS and Python version
+      placeholder: "Ubuntu 24.04, Python 3.12.9"
