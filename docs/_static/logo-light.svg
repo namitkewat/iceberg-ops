@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="96" height="96" role="img" aria-label="iceberg-ops">
+  <rect x="4" y="4" width="56" height="56" rx="13" fill="#0B2545"/>
+  <path d="M4 20V17A13 13 0 0 1 17 4H47A13 13 0 0 1 60 17V20Z" fill="#1D4E89"/>
+  <path d="M24 20L29 10Q30 8 32.5 11L40 20Z" fill="#FFFFFF"/>
+  <path d="M24 24H40L41 31C42 38 37.5 47 32 52.5Q31 53.5 30 52.5C26.5 48.5 24 44 24 38Z" fill="#A7D3F2"/>
+</svg>

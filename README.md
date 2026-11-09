@@ -1,5 +1,10 @@
 # iceberg-ops
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/namitkewat/iceberg-ops/main/docs/_static/logo-dark.svg">
+  <img src="https://raw.githubusercontent.com/namitkewat/iceberg-ops/main/docs/_static/logo-light.svg" alt="iceberg-ops logo" width="96" height="96" align="right">
+</picture>
+
 **Alembic-style schema migrations for Apache Iceberg.**
 Versioned, reviewable table changes: numbered `upgrade()` / `downgrade()`
 revisions, autogenerate, `stamp`, and a migration history stored as an

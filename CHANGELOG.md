@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Project logo. The docs show it in the sidebar, in a light and a dark
+  version, and use it as a favicon that follows the browser's light or
+  dark theme. Links to the docs get a preview image (Open Graph), and the
+  README shows the logo next to its introduction.
+
 ## [0.1.0] - 2026-11-08
 
 First public release of `iceberg-ops`: Alembic-style schema migrations

@@ -97,15 +97,31 @@ if not html_baseurl.endswith("/"):
 # HTML theme.
 html_theme = "furo"
 html_title = f"iceberg-ops {release}"
+html_static_path = ["_static"]
+# _templates/sidebar/brand.html gives the sidebar logo an empty alt text:
+# the "iceberg-ops <version>" text in the same link already names it.
+templates_path = ["_templates"]
+# The favicon follows the browser's light or dark theme on its own.
+html_favicon = "_static/favicon.svg"
 html_theme_options = {
     "source_repository": "https://github.com/namitkewat/iceberg-ops/",
     "source_branch": "main",
     "source_directory": "docs/",
+    "light_logo": "logo-light.svg",
+    "dark_logo": "logo-dark.svg",
 }
 
 # Open Graph tags for link previews.
 ogp_site_url = html_baseurl
 ogp_site_name = "iceberg-ops"
+ogp_image = "_static/social-preview.png"
+ogp_image_alt = "iceberg-ops: Alembic-style schema migrations for Apache Iceberg"
+# Ask for a large preview card; keep the size in step with the PNG.
+ogp_custom_meta_tags = [
+    '<meta name="twitter:card" content="summary_large_image" />',
+    '<meta property="og:image:width" content="1280" />',
+    '<meta property="og:image:height" content="640" />',
+]
 
 # Copy buttons on code blocks: strip shell and Python REPL prompts.
 copybutton_prompt_text = r"\$ |>>> |\.\.\. "

@@ -1,0 +1,15 @@
+{#- Furo's sidebar brand with an empty alt text on the logo: the visible
+    project name in the same link already names it. Re-check this block
+    when Furo is upgraded. -#}
+{% extends "!sidebar/brand.html" %}
+{% block brand_content %}
+  {%- if theme_light_logo and theme_dark_logo %}
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="{{ pathto('_static/' + theme_light_logo, 1) }}" alt=""/>
+    <img class="sidebar-logo only-dark" src="{{ pathto('_static/' + theme_dark_logo, 1) }}" alt=""/>
+  </div>
+  {%- endif %}
+  {% if not theme_sidebar_hide_name %}
+  <span class="sidebar-brand-text">{{ docstitle if docstitle else project }}</span>
+  {%- endif %}
+{% endblock brand_content %}
