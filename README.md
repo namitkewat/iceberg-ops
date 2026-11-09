@@ -13,8 +13,8 @@ JVM.
 
 [![CI](https://github.com/namitkewat/iceberg-ops/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/namitkewat/iceberg-ops/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/namitkewat/iceberg-ops?display_name=tag&sort=semver)](https://github.com/namitkewat/iceberg-ops/releases/latest)
-[![PyPI](https://img.shields.io/pypi/v/iceberg-ops.svg)](https://pypi.org/project/iceberg-ops/)
-[![Python](https://img.shields.io/pypi/pyversions/iceberg-ops.svg)](https://pypi.org/project/iceberg-ops/)
+[![PyPI](https://img.shields.io/pypi/v/iceberg-ops)](https://pypi.org/project/iceberg-ops/)
+[![Python](https://img.shields.io/pypi/pyversions/iceberg-ops)](https://pypi.org/project/iceberg-ops/)
 [![Docs](https://img.shields.io/badge/docs-latest-blue.svg)](https://namitkewat.github.io/iceberg-ops/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/namitkewat/iceberg-ops/blob/main/LICENSE)
 
