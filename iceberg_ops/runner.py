@@ -433,17 +433,30 @@ class MigrationRunner:
             print(f"\n  (no migration history for namespace '{self._namespace}')\n")
             return
 
+        # Size each column from its widest value so long versions and
+        # full ISO-8601 timestamps never push the next column out of line.
+        version_w = max(len("VERSION"), *(len(str(r["version"])) for r in records))
+        status_w = max(len("STATUS"), *(len(str(r["status"])) for r in records))
+        applied_w = max(len("APPLIED AT"), *(len(str(r["applied_at"])) for r in records))
+        header = (
+            f"  {'VERSION':<{version_w}} {'STATUS':<{status_w}} "
+            f"{'APPLIED AT':<{applied_w}} DESCRIPTION"
+        )
+
         print(f"\nMigration History  (namespace: {self._namespace})")
         print("=" * 72)
-        print(f"  {'VERSION':<8} {'STATUS':<14} {'APPLIED AT':<26} DESCRIPTION")
-        print("  " + "-" * 68)
+        print(header)
+        print("  " + "-" * max(68, len(header) - 2))
+        error_indent = " " * (2 + version_w + 1)
         for r in records:
             print(
-                f"  {r['version']:<8} {r['status']:<14} {r['applied_at']:<26} {r['description']}"
+                f"  {r['version']!s:<{version_w}} {r['status']!s:<{status_w}} "
+                f"{r['applied_at']!s:<{applied_w}} {r['description']}"
             )
             err = r.get("error")
             if err:
-                print(f"           ERROR: {str(err)[:80]}")
+                # One line, so a multi-line message cannot break the table.
+                print(f"{error_indent}ERROR: {' '.join(str(err).split())[:80]}")
         print()
 
     def plan(self, target: str | int | None = None) -> None:

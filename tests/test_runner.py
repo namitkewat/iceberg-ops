@@ -424,6 +424,52 @@ class TestHistory:
         assert "0002" in out
         assert "applied" in out
 
+    def test_columns_line_up(
+        self,
+        memory_catalog,
+        tmp_path,
+        capsys: pytest.CaptureFixture[str],
+    ) -> None:
+        """Full ISO-8601 timestamps never push DESCRIPTION out of its column."""
+        d = tmp_path / "migrations"
+        _write_noop(d, "0001", description="Create orders table")
+        _write_migration(
+            d,
+            "0002",
+            """
+            from iceberg_ops.migration import BaseMigration
+            class Migration(BaseMigration):
+                version = "0002"
+                description = "intentional fail"
+                def upgrade(self, ctx):
+                    raise RuntimeError("boom\\n  second line")
+                def downgrade(self, ctx):
+                    pass
+            """,
+        )
+        runner = MigrationRunner(memory_catalog, namespace="ns", migrations_dir=str(d))
+        with pytest.raises(RuntimeError, match="boom"):
+            runner.migrate()
+        capsys.readouterr()
+
+        runner.history()
+        lines = capsys.readouterr().out.splitlines()
+        header = next(line for line in lines if line.lstrip().startswith("VERSION"))
+        cols = [header.index(h) for h in ("VERSION", "STATUS", "APPLIED AT", "DESCRIPTION")]
+        records = runner._history.get_all("ns")
+        assert {r["status"] for r in records} == {"applied", "failed"}
+        for rec in records:
+            line = next(row for row in lines if row.lstrip().startswith(rec["version"] + " "))
+            values = (rec["version"], rec["status"], rec["applied_at"], rec["description"])
+            for col, value in zip(cols, values, strict=True):
+                assert line[col:].startswith(value), (line, value)
+                assert line[col - 1] == " ", (line, value)
+        error_line = next(row for row in lines if "ERROR:" in row)
+        assert error_line.index("ERROR:") == cols[1]
+        # A multi-line message is folded onto the ERROR line.
+        assert error_line.endswith("RuntimeError: boom second line")
+        assert not any(row.lstrip().startswith("second line") for row in lines)
+
 
 class TestConcurrencyDetection:
     def test_foreign_version_during_run_detected(

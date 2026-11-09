@@ -327,6 +327,9 @@ Migrations and CLI:
   writes to commit contention.
 - When recording a failure in history itself fails, the migration's
   own error is still the one raised; the history error is logged.
+- `history` sizes its columns to their contents, so full ISO-8601
+  timestamps no longer push DESCRIPTION out of line, and a multi-line
+  error is printed on one line.
 - `create_table_if_not_exists` raises `ValueError` before creating
   anything when a `pa.Schema` is combined with a non-empty
   `partition_spec` or `sort_order`.
